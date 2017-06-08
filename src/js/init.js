@@ -265,6 +265,7 @@ var Simulator = Class.extend({
         var is_issued = this.issue();
         this.execute();
         this.writeBack();
+        this.updateView();
     },
 
     issue: function() {
@@ -509,6 +510,11 @@ var Simulator = Class.extend({
 
     updateView: function() {
         // update html elements
+        var table = document.getElementById('float-regs');
+        var r = 2;
+        for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
+            table.rows[r].cells[c].innerHTML = simulator.Regs[c];
+        }
     }
 });
 

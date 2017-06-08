@@ -205,33 +205,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <strong>表达式</strong>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
                         <tr class="success">
                             <td>
                                 <strong>数据</strong>
@@ -280,6 +253,7 @@
                 <table class="table table-hover table-bordered table-condensed" id="inst-table">
                     <thead>
                         <tr>
+                            <th>Index</th>
                             <th>
                                 Name
                             </th>
@@ -305,87 +279,51 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                01/04/2012
-                            </td>
-                            <td>
-                                Default
-                            </td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr class="success">
-                            <td>
-                                1
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                01/04/2012
-                            </td>
-                            <td>
-                                Approved
-                            </td>
+                            <td>2</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr class="error">
-                            <td>
-                                2
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                02/04/2012
-                            </td>
-                            <td>
-                                Declined
-                            </td>
+                            <td>3</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr class="warning">
-                            <td>
-                                3
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                03/04/2012
-                            </td>
-                            <td>
-                                Pending
-                            </td>
+                            <td>4</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr class="info">
-                            <td>
-                                4
-                            </td>
-                            <td>
-                                TB - Monthly
-                            </td>
-                            <td>
-                                04/04/2012
-                            </td>
-                            <td>
-                                Call in to confirm
-                            </td>
-
+                            <td>5</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -582,10 +520,10 @@
                 var table = document.getElementById("inst-table");
                 var end = Math.min(lines.length, 5);
                 r = i + 1;
-                table.rows[r].cells[0].innerHTML = parts[0];
-                table.rows[r].cells[1].innerHTML = parts[1];
-                table.rows[r].cells[2].innerHTML = parts[2];
-                table.rows[r].cells[3].innerHTML = parts[3];
+                table.rows[r].cells[1].innerHTML = parts[0];
+                table.rows[r].cells[2].innerHTML = parts[1];
+                table.rows[r].cells[3].innerHTML = parts[2];
+                table.rows[r].cells[4].innerHTML = parts[3];
             }
             // simulator.nInsts = 0;
         };

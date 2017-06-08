@@ -627,6 +627,19 @@ var Simulator = Class.extend({
     }
 });
 
+function run_to_end() {
+    var cycles = 0;
+    var last_index = simulator.instQueue.length;
+    var curi = 0;
+    while (curi < last_index && simulator.instQueue[curi].status != WB) {
+        simulator.oneCycle();
+        if (simulator.instQueue[curi].status == WB) {
+            curi += 1;
+        }
+        cycles++;
+    }
+}
+
 var simulator = new Simulator(3, 3, 3, 2);
 
 function view_mem() {
@@ -635,10 +648,8 @@ function view_mem() {
     simulator.view_mem(parseInt(addr));
 }
 
-if(typeof(String.prototype.trim) === "undefined")
-{
-    String.prototype.trim = function() 
-    {
+if (typeof(String.prototype.trim) === "undefined") {
+    String.prototype.trim = function() {
         return String(this).replace(/^\s+|\s+$/g, '');
     };
 }

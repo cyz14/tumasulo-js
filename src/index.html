@@ -11,6 +11,34 @@
         hr {
             margin: 5px 0;
         }
+        table {
+            table-layout:fixed ;
+        }
+        .className{ 
+            -webkit-animation: twinkling 0.5s ease-in-out 
+        } 
+        .animated{ 
+            -webkit-animation-duration: 0.5s; 
+            animation-duration: 0.5s; 
+            -webkit-animation-fill-mode: both; 
+            animation-fill-mode: both 
+        } 
+        @-webkit-keyframes twinkling{ 
+            0%{ 
+                opacity: 0.2; 
+            }            
+            100%{ 
+                opacity: 1; 
+            } 
+        } 
+        @keyframes twinkling{ 
+            0%{ 
+                opacity: 0.2; 
+            } 
+            100%{ 
+                opacity: 1; 
+            } 
+        }
     </style>
 </head>
 
@@ -25,7 +53,7 @@
                     <input type="file" id="inst_input" onchange="loadInstsFromFile(event)"/>
                     <button class="btn" id="next_cycle" onclick="next_cycle()">Next Cycle</button>
                     <img alt="" style="width:40px;height:auto;" src="https://image.freepik.com/free-icon/timer_318-61019.jpg" />
-                    <span id="cycle-num">0</span>
+                    <span id="cycle-num" class="className">0</span>
                 </h4>
             </div>
         </div>

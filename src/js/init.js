@@ -7,6 +7,11 @@ const DONE = 4;
 var Instruction = Class.extend({
     init: function(op, rd, rs, rt) {
         this.op = op;
+        if (op == 'LD' || op == 'ST') {
+            this.rd = rd; // target reg
+            this.rs = rs; // addr
+            this.rt = 0;
+        }
         this.rd = rd; // target register
         this.rs = rs; // first oprand
         this.rt = rt; // second oprand
@@ -14,7 +19,7 @@ var Instruction = Class.extend({
         this.leftCycle = opCycleNumber(op);
     },
     isFP: function() {
-        if (this.op == 'LD' || this.op == 'SD') {
+        if (this.op == 'LD' || this.op == 'ST') {
             return false;
         }
         return true;
@@ -183,13 +188,15 @@ var Memory = Class.extend({
     },
 
     storeByResStation: function(rs) {
+        this.stCycleLeft = 2;
         this.stRS = rs;
+        this.storeBusy = 'yes';
     },
 
     oneCycle: function() {
         if (this.loadBusy == 'yes') {
             if (this.ldCycleLeft == 2) {
-                this.ldRS.A = this.ldRS.Vj + this.ldRS.A;
+                // pass
             } else if (this.ldCycleLeft == 1) {
                 this.ld = this.getMemAt(this.ldRS.A);
                 this.loadBusy = 'not';
@@ -199,14 +206,12 @@ var Memory = Class.extend({
 
         if (this.storeBusy == 'yes') {
             if (this.stCycleLeft == 2) {
-                this.stRS.A = this.stRS.Vj + this.stRS.A;
+                // pass
             } else if (this.stCycleLeft == 1) {
                 this.setMemAt(this.stRS.A, this.stRS.Vk);
                 this.storeBusy = 'not';
             }
             this.stCycleLeft--;
-            if (this.stCycleLeft == 0)
-                this.storeBusy = 'not';
         }
     },
 
@@ -215,6 +220,11 @@ var Memory = Class.extend({
             this.simu.setCDB(this.ldRS.id, this.ld);
             this.ldRS.busy = 'not';
         }
+        if (this.stCycleLeft == 0) {
+            this.storeBusy = 'not';
+            this.setMemAt(this.stRS.A, this.stRS.Vk);
+        }
+
     }
 });
 
@@ -230,6 +240,9 @@ var Simulator = Class.extend({
             this.Regs[i] = 1.0 * i;
 
         this.memory = new Memory(this, 4096);
+        for (var i = 0; i < 4096; i++) {
+            this.memory.setMemAt(i, i % 11);
+        }
 
         this.adder = new FPAdder(this, 'fpadder');
 
@@ -353,24 +366,24 @@ var Simulator = Class.extend({
                     }
                 }
                 if (r != -1) {
-                    var rt = this.parseRegister(inst.rd);
-                    var imm = this.parseRegister(inst.rs);
-                    var rs = this.parseRegister(inst.rt);
 
-                    if (this.Qi[rs] != 0) {
-                        this.RS[r].Qj = this.Qi[rs];
-                    } else {
-                        this.RS[r].Vj = this.Regs[rs];
-                        this.RS[r].Qj = 0; // ready
-                    }
+                    var imm = this.parseRegister(inst.rs); // addr
+
+                    // if (this.Qi[rs] != 0) {
+                    //     this.RS[r].Qj = this.Qi[rs];
+                    // } else {
+                    //     this.RS[r].Vj = this.Regs[rs];
+                    //     this.RS[r].Qj = 0; // ready
+                    // }
+                    this.RS[r].Qj = 0;
                     this.RS[r].busy = 'yes';
                     this.RS[r].A = imm;
-                    this.Qi[rt] = r;
+                    this.Qi[rd] = r;
 
                     this.RS[r].index = inst.index;
                     return true;
                 }
-            } else if (inst.op == 'SD') {
+            } else if (inst.op == 'ST') {
                 var r = -1;
                 for (var i = this.storeStartIndex; i < this.storeEndIndex; ++i) {
                     if (this.RS[i].busy == 'not') {
@@ -382,14 +395,8 @@ var Simulator = Class.extend({
                 if (r != -1) {
                     var rt = this.parseRegister(inst.rd);
                     var imm = this.parseRegister(inst.rs);
-                    var rs = this.parseRegister(inst.rt);
 
-                    if (this.Qi[rs] != 0) {
-                        this.RS[r].Qj = this.Qi[rs];
-                    } else {
-                        this.RS[r].Vj = this.Regs[rs];
-                        this.RS[r].Qj = 0; // ready
-                    }
+                    this.RS[r].Qj = 0;
 
                     if (this.Qi[rt] != 0) {
                         this.RS[r].Qk = this.Qi[rt];
@@ -468,7 +475,7 @@ var Simulator = Class.extend({
         }
 
         r = this.storeFirstPos();
-        if (r > 0 && this.memory.storeBusy == 'not' && this.RS[r].Qj == 0) {
+        if (r > 0 && this.memory.storeBusy == 'not' && this.RS[r].Qk == 0) {
             this.memory.storeByResStation(this.RS[r]);
         }
 
@@ -529,6 +536,7 @@ var Simulator = Class.extend({
             table.rows[r].cells[i].innerHTML = start + i - 1;
             table.rows[r + 1].cells[i].innerHTML = data[i - 1];
         }
+        this.last_addr = addr;
     },
 
     Qj2name: [0, 'Load1', 'Load2', 'Load3', 'Store1', 'Store2', 'Store3', 'Add1', 'Add2', 'Add3', 'Mult1', 'Mult2'],
@@ -572,6 +580,8 @@ var Simulator = Class.extend({
             stations.rows[r].cells[6].innerHTML = this.Qj2name[rs.Qj];
             stations.rows[r].cells[7].innerHTML = this.Qj2name[rs.Qk];
         }
+
+        this.view_mem(this.last_addr);
     }
 });
 

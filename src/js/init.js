@@ -62,27 +62,24 @@ FPAdder = Class.extend({
     oneCycle: function() {
         this.inst2 = this.inst1;
         if (this.inst2 != null) {
-            this.busy = 'yes';
+            this.busy = 'exe';
+            if (this.inst2.leftCycle == 1) {
+                switch (this.inst2.op) {
+                    case 'ADDD':
+                        this.inst2.res = this.inst2.rs + this.inst2.rt;
+                        break;
+                    case 'SUBD':
+                        this.inst2.res = this.inst2.rs - this.inst2.rt;
+                        break;
+                }
+            }
+            this.inst2.leftCycle--;
         }
 
         this.inst1 = this.newInst;
 
-        if (this.inst1 != null) {
-            if (this.inst1.leftCycle == 1) {
-                switch (this.inst1.op) {
-                    case 'ADDD':
-                        this.inst1.res = this.inst1.rs + this.inst1.rt;
-                        break;
-                    case 'SUBD':
-                        this.inst1.res = this.inst1.rs - this.inst1.rt;
-                        break;
-                }
-            }
+        if (this.inst1)
             this.inst1.leftCycle--;
-        }
-
-        if (this.inst2)
-            this.inst2.leftCycle--;
         this.newInst = null;
     },
 
@@ -92,7 +89,7 @@ FPAdder = Class.extend({
     },
 
     writeBack: function() {
-        if (this.busy == 'yes' && this.inst2 && this.inst2.leftCycle == 0) {
+        if (this.busy == 'exe' && this.inst2 && this.inst2.leftCycle == 0) {
             // notify
             this.simu.setCDB(this.inst2.rsNum, this.inst2.res);
             this.busy = 'not';
@@ -423,7 +420,7 @@ var Simulator = Class.extend({
     execute: function() {
 
         for (var r = this.addStartIndex; r < this.addEndIndex; ++r) {
-            if (this.RS[r].busy == 'not') continue;
+            if (this.RS[r].busy != 'yes') continue;
             if (this.RS[r].Qj == 0 && this.RS[r].Qk == 0) {
                 // calculate
                 this.adder.addInst({
@@ -433,9 +430,11 @@ var Simulator = Class.extend({
                     rs: this.RS[r].Vj,
                     rt: this.RS[r].Vk
                 });
+                this.RS[r].busy = 'exe';
                 break;
             }
         }
+
 
         if (this.multiplier.busy == 'not') {
             for (var r = this.multStartIndex; r < this.multEndIndex; ++r) {

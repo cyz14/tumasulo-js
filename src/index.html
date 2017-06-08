@@ -11,6 +11,7 @@
 
 <body>
 
+
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
@@ -276,7 +277,7 @@
                 </form>
                 
             </h3>
-            <table class="table table-hover table-bordered table-condensed">
+            <table class="table table-hover table-bordered table-condensed" id="inst-table">
                 <thead>
                     <tr>
                         <th>
@@ -399,164 +400,164 @@
                     PC:
                 </li>
             </ul>
-            <h3>
-                <form class="form-inline">
-                    <span>内存MEM</span>
-                    <input type="text" class="input-medium search-query">
-                    <button type="submit" class="btn">Goto</button>
-                </form>
-            </h3>
-            <table class="table table-condensed table-bordered">
-                <thead>
-                    <tr>
-                        <th>
-                            地址
-                        </th>
-                        <th>
-                        </th>
-                        <th>
-                        </th>
-                        <th>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <strong>数据</strong>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="span4">
-            <h3>
-                Load Queue
-            </h3>
-            <table class="table table-bordered" id="load-queue">
-                <thead>
-                    <tr>
-                        <th>
-                        </th>
-                        <th>
-                            Busy
-                        </th>
-                        <th>
-                            Address
-                        </th>
-                        <th>
-                            Cache
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            Load1
-                        </td>
-                        <td>
-                            N0
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    <tr class="success">
-                        <td>
-                            Load2
-                        </td>
-                        <td>
-                            N0
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    <tr class="error">
-                        <td>
-                            Load3
-                        </td>
-                        <td>
-                            N0
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <h3>
-                Store Queue
-            </h3>
-            <table class="table table-condensed table-bordered" id="store-queue">
-                <thead>
-                    <tr>
-                        <th>
-                        </th>
-                        <th>
-                            Busy
-                        </th>
-                        <th>
-                            Address
-                        </th>
-                        <th>
-                            Q<sub>i</sub>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            Store1
-                        </td>
-                        <td>
-                            N0
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    <tr class="success">
-                        <td>
-                            Store2
-                        </td>
-                        <td>
-                            N0
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    <tr class="error">
-                        <td>
-                            Store3
-                        </td>
-                        <td>
-                            N0
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                <h3>
+                    <form class="form-inline">
+                        <span>内存MEM</span>
+                        <input type="text" class="input-medium search-query">
+                        <button type="submit" class="btn">Goto</button>
+                    </form>
+                </h3>
+                <table class="table table-condensed table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                地址
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>数据</strong>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="span4">
+                <h3>
+                    Load Queue
+                </h3>
+                <table class="table table-bordered" id="load-queue">
+                    <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                                Busy
+                            </th>
+                            <th>
+                                Address
+                            </th>
+                            <th>
+                                Cache
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Load1
+                            </td>
+                            <td>
+                                N0
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr class="success">
+                            <td>
+                                Load2
+                            </td>
+                            <td>
+                                N0
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr class="error">
+                            <td>
+                                Load3
+                            </td>
+                            <td>
+                                N0
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>
+                    Store Queue
+                </h3>
+                <table class="table table-condensed table-bordered" id="store-queue">
+                    <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                                Busy
+                            </th>
+                            <th>
+                                Address
+                            </th>
+                            <th>
+                                Q<sub>i</sub>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Store1
+                            </td>
+                            <td>
+                                N0
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr class="success">
+                            <td>
+                                Store2
+                            </td>
+                            <td>
+                                N0
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr class="error">
+                            <td>
+                                Store3
+                            </td>
+                            <td>
+                                N0
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
-    
-</div>
-
 </body>
 
 <script src="js/patched_class.js"></script>
@@ -565,6 +566,7 @@
 <script>
     function loadInstsFromFile(event) {
         // reset
+        var cycle_num = document.getElementById('cycle-num');
         cycle_num.innerHTML = '0';
         
         var file = event.target.files[0];
@@ -584,13 +586,22 @@
                 var inst = new Instruction(parts[0], parts[1], parts[2], parts[3]);
                 simulator.instQueue.push(inst);
                 console.log(simulator.instQueue[i].toString());
+
+                // update table
+                var table = document.getElementById("inst-table");
+                var end = Math.min(lines.length, 5);
+                r = i + 1;
+                table.rows[r].cells[0].innerHTML = parts[0];
+                table.rows[r].cells[1].innerHTML = parts[1];
+                table.rows[r].cells[2].innerHTML = parts[2];
+                table.rows[r].cells[3].innerHTML = parts[3];
             }
             // simulator.nInsts = 0;
         };
         reader.readAsText(file);
     }
 
-    function next_cycle() { 
+    function next_cycle() {
         simulator.oneCycle();
         var cycle_num = document.getElementById('cycle-num');
 
@@ -599,13 +610,13 @@
         var float_regs = document.getElementById('float-regs');
         for (var r = 2, n = float_regs.rows.length; r < n; r++) {
             for (var c = 1, m = float_regs.rows[r].cells.length; c < m; c++) {
-                float_regs.rows[r].cells[c].innerHTML=simulator.Regs[c-1];
+                float_regs.rows[r].cells[c].innerHTML = simulator.Regs[c - 1];
             }
         }
 
         var load_q = document.getElementById('load-queue');
         for (var r = 1, n = load_q.rows.length; r < n; r++) {
-            var rs = simulator.RS[simulator.loadStartIndex+r-1];
+            var rs = simulator.RS[simulator.loadStartIndex + r - 1];
             load_q.rows[r].cells[1].innerHTML = rs.busy;
             load_q.rows[r].cells[2].innerHTML = rs.A;
             // load_q.rows[r].cells[3] = ;
@@ -613,7 +624,7 @@
 
         var store_q = document.getElementById('store-queue');
         for (var r = 1, n = store_q.rows.length; r < n; r++) {
-            var rs = simulator.RS[simulator.storeStartIndex+r-1];
+            var rs = simulator.RS[simulator.storeStartIndex + r - 1];
             store_q.rows[r].cells[1].innerHTML = rs.busy;
             store_q.rows[r].cells[2].innerHTML = rs.A;
 
@@ -621,7 +632,7 @@
 
         var stations = document.getElementById('reserve-stations');
         for (var r = 1, n = stations.rows.length; r < n; r++) {
-            var rs = simulator.RS[simulator.addStartIndex+r-1];
+            var rs = simulator.RS[simulator.addStartIndex + r - 1];
             // stations.rows[r].cells[0].innerHTML=
             stations.rows[r].cells[2].innerHTML = rs.busy;
             stations.rows[r].cells[3].innerHTML = rs.op;
@@ -630,6 +641,7 @@
             stations.rows[r].cells[6].innerHTML = rs.Qj;
             stations.rows[r].cells[7].innerHTML = rs.Qk;
         }
+
     }
 </script>
 

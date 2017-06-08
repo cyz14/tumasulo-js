@@ -515,6 +515,17 @@ var Simulator = Class.extend({
         return res;
     },
 
+    view_mem: function(addr) {
+        var data = new Array(10);
+        var start = max(addr - 5, 0);
+        var end = min(addr + 5, 4096 - 1);
+
+        for (var i = start; i < end; ++i) {
+            data[i - start] = this.memory.getMemAt(i);
+        }
+        var table = document.getElementById("mem-table");
+    },
+
     Qj2name: [0, 'Load1', 'Load2', 'Load3', 'Store1', 'Store2', 'Store3', 'Add1', 'Add2', 'Add3', 'Mult1', 'Mult2'],
     updateView: function() {
         // update html elements

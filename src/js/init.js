@@ -50,7 +50,7 @@ function opCycleNumber(op) {
             num = 40;
             break;
         default:
-            console.log(op + ' not supported');
+            // console.log(op + ' not supported');
     }
     return num;
 }
@@ -107,6 +107,7 @@ FPAdder = Class.extend({
     },
 
     updateInst: function(index) {
+        if (index >= 5) return;
         for (var i = 0; i < this.simu.instQueue[index].status; i++) {
             this.table.rows[index + 1].cells[i + 5].innerHTML = 'O';
         }
@@ -138,7 +139,7 @@ var Multiplier = Class.extend({
                     this.inst.res = this.inst.rs / this.inst.rt;
                     break;
                 default:
-                    console.log('Error');
+                    // console.log('Error');
                     break;
             }
             this.simu.instQueue[this.inst.index].status = EXE; // executed
@@ -161,6 +162,7 @@ var Multiplier = Class.extend({
     },
 
     updateInst: function(index) {
+        if (index >= 5) return;
         for (var i = 0; i < this.simu.instQueue[index].status; i++) {
             this.table.rows[index + 1].cells[i + 5].innerHTML = 'O';
         }
@@ -256,6 +258,7 @@ var Memory = Class.extend({
     },
 
     updateInst: function(index) {
+        if (index >= 5) return;
         for (var i = 0; i < this.simu.instQueue[index].status; i++) {
             this.table.rows[index + 1].cells[i + 5].innerHTML = 'O';
         }
@@ -455,6 +458,7 @@ var Simulator = Class.extend({
     },
 
     updateInst: function(index) {
+        if (index >= 5) return;
         for (var i = 0; i < this.instQueue[index].status; i++) {
             this.table.rows[index + 1].cells[i + 5].innerHTML = 'O';
         }
@@ -644,7 +648,7 @@ var simulator = new Simulator(3, 3, 3, 2);
 
 function view_mem() {
     var addr = document.getElementById("mem-addr").value;
-    console.log(addr)
+    // console.log(addr)
     simulator.view_mem(parseInt(addr));
 }
 

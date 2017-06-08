@@ -551,13 +551,13 @@
         reader.onload = function(event) {
             // The file's text will be printed here
             var lines = event.target.result.split('\n');
-            console.log(lines);
+            // // console.log(lines);
             // simulator.nInsts = lines.length;
             for (var i = 0; i < lines.length; ++i) {
                 var parts = lines[i].split(' ');
-                console.log(parts);
+                // console.log(parts);
                 if (parts.length == 1) {
-                    console.log('End');
+                    // console.log('End');
                     continue;
                 }
                 var inst;
@@ -568,12 +568,13 @@
                 }
                 inst.index = i;
                 simulator.instQueue.push(inst);
-                console.log(simulator.instQueue[i].toString());
+                // console.log(simulator.instQueue[i].toString());
 
                 // update table
                 var table = document.getElementById("inst-table");
                 var end = Math.min(lines.length, 5);
                 r = i + 1;
+                if (r > 5) continue;
                 table.rows[r].cells[1].innerHTML = parts[0];
                 table.rows[r].cells[2].innerHTML = parts[1];
                 table.rows[r].cells[3].innerHTML = parts[2];

@@ -517,13 +517,16 @@ var Simulator = Class.extend({
 
     view_mem: function(addr) {
         var data = new Array(10);
-        var start = max(addr - 5, 0);
-        var end = min(addr + 5, 4096 - 1);
+        var start = Math.max(addr - 5, 0);
+        var end = Math.min(addr + 5, 4096 - 1);
 
         for (var i = start; i < end; ++i) {
             data[i - start] = this.memory.getMemAt(i);
         }
         var table = document.getElementById("mem-table");
+        var r = 1;
+        for (var i = 1; i <= 3; i++)
+            table.rows[r].cells[i].innerHTML = data[i - 1];
     },
 
     Qj2name: [0, 'Load1', 'Load2', 'Load3', 'Store1', 'Store2', 'Store3', 'Add1', 'Add2', 'Add3', 'Mult1', 'Mult2'],
@@ -571,3 +574,9 @@ var Simulator = Class.extend({
 });
 
 var simulator = new Simulator(3, 3, 3, 2);
+
+function view_mem() {
+    var addr = document.getElementById("mem-addr").textContent;
+    console.log(addr)
+    simulator.view_mem(parseInt(addr));
+}

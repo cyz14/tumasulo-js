@@ -29,7 +29,125 @@
             </div>
         </div>
         <div class="row-fluid">
-            <div class="span12">
+            <div class="span4">
+                <h3>
+                    Load Queue
+                </h3>
+                <table class="table table-condensed table-bordered" id="load-queue">
+                    <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                                Busy
+                            </th>
+                            <th>
+                                Address
+                            </th>
+                            <th>
+                                Cache
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Load1
+                            </td>
+                            <td>
+                                N0
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr class="success">
+                            <td>
+                                Load2
+                            </td>
+                            <td>
+                                N0
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr class="error">
+                            <td>
+                                Load3
+                            </td>
+                            <td>
+                                N0
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h3>
+                    Store Queue
+                </h3>
+                <table class="table table-condensed table-bordered" id="store-queue">
+                    <thead>
+                        <tr>
+                            <th>
+                            </th>
+                            <th>
+                                Busy
+                            </th>
+                            <th>
+                                Address
+                            </th>
+                            <th>
+                                Q<sub>i</sub>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                Store1
+                            </td>
+                            <td>
+                                N0
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr class="success">
+                            <td>
+                                Store2
+                            </td>
+                            <td>
+                                N0
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr class="error">
+                            <td>
+                                Store3
+                            </td>
+                            <td>
+                                N0
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="span8">
                 <h3>
                     Reservation Stations
                 </h3>
@@ -237,7 +355,7 @@
             </div>
         </div>
         <div class="row-fluid">
-            <div class="span8">
+            <div class="span6">
                 <h3 class="text-left">
 
 
@@ -330,12 +448,13 @@
                         </tr>
                     </tbody>
                 </table>
-
+            </div>
+            <div class="span6">
                 <h3>
                     <form class="form-inline">
                         <span>内存MEM</span>
                         <input type="text" class="input-medium search-query" id="mem-addr">
-                        <button type="submit" class="btn" onclick="view_mem()">Goto</button>
+                        <button type="button" class="btn" onclick="view_mem()">Goto</button>
                     </form>
                 </h3>
                 <table class="table table-condensed table-bordered" id="mem-table">
@@ -348,8 +467,14 @@
                             </th>
                             <th>
                             </th>
-                            <th>
-                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -357,136 +482,20 @@
                             <td>
                                 <strong>数据</strong>
                             </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-
-            <div class="span4">
-                <h3>
-                    Load Queue
-                </h3>
-                <table class="table table-bordered" id="load-queue">
-                    <thead>
-                        <tr>
-                            <th>
-                            </th>
-                            <th>
-                                Busy
-                            </th>
-                            <th>
-                                Address
-                            </th>
-                            <th>
-                                Cache
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                Load1
-                            </td>
-                            <td>
-                                N0
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr class="success">
-                            <td>
-                                Load2
-                            </td>
-                            <td>
-                                N0
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr class="error">
-                            <td>
-                                Load3
-                            </td>
-                            <td>
-                                N0
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h3>
-                    Store Queue
-                </h3>
-                <table class="table table-condensed table-bordered" id="store-queue">
-                    <thead>
-                        <tr>
-                            <th>
-                            </th>
-                            <th>
-                                Busy
-                            </th>
-                            <th>
-                                Address
-                            </th>
-                            <th>
-                                Q<sub>i</sub>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                Store1
-                            </td>
-                            <td>
-                                N0
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr class="success">
-                            <td>
-                                Store2
-                            </td>
-                            <td>
-                                N0
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr class="error">
-                            <td>
-                                Store3
-                            </td>
-                            <td>
-                                N0
-                            </td>
-                            <td>
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
         </div>
     </div>
 </body>

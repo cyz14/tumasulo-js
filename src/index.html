@@ -594,45 +594,6 @@
 
     function next_cycle() {
         simulator.oneCycle();
-        var cycle_num = document.getElementById('cycle-num');
-
-        cycle_num.innerHTML = eval(cycle_num.innerHTML) + 1;
-
-        var float_regs = document.getElementById('float-regs');
-        for (var r = 2, n = float_regs.rows.length; r < n; r++) {
-            for (var c = 1, m = float_regs.rows[r].cells.length; c < m; c++) {
-                float_regs.rows[r].cells[c].innerHTML = simulator.Regs[c - 1];
-            }
-        }
-
-        var load_q = document.getElementById('load-queue');
-        for (var r = 1, n = load_q.rows.length; r < n; r++) {
-            var rs = simulator.RS[simulator.loadStartIndex + r - 1];
-            load_q.rows[r].cells[1].innerHTML = rs.busy;
-            load_q.rows[r].cells[2].innerHTML = rs.A;
-            // load_q.rows[r].cells[3] = ;
-        }
-
-        var store_q = document.getElementById('store-queue');
-        for (var r = 1, n = store_q.rows.length; r < n; r++) {
-            var rs = simulator.RS[simulator.storeStartIndex + r - 1];
-            store_q.rows[r].cells[1].innerHTML = rs.busy;
-            store_q.rows[r].cells[2].innerHTML = rs.A;
-
-        }
-
-        var stations = document.getElementById('reserve-stations');
-        for (var r = 1, n = stations.rows.length; r < n; r++) {
-            var rs = simulator.RS[simulator.addStartIndex + r - 1];
-            // stations.rows[r].cells[0].innerHTML=
-            stations.rows[r].cells[2].innerHTML = rs.busy;
-            stations.rows[r].cells[3].innerHTML = rs.op;
-            stations.rows[r].cells[4].innerHTML = rs.Vj;
-            stations.rows[r].cells[5].innerHTML = rs.Vk;
-            stations.rows[r].cells[6].innerHTML = rs.Qj;
-            stations.rows[r].cells[7].innerHTML = rs.Qk;
-        }
-
     }
 </script>
 

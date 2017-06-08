@@ -227,7 +227,7 @@ var Simulator = Class.extend({
 
         this.Regs = new Array(30 + 1);
         for (var i = 0; i < 31; ++i)
-            this.Regs[i] = i;
+            this.Regs[i] = 1.0 * i;
 
         this.memory = new Memory(this, 4096);
 
@@ -265,6 +265,7 @@ var Simulator = Class.extend({
         var is_issued = this.issue();
         this.execute();
         this.writeBack();
+        this.updateView();
     },
 
     issue: function() {
@@ -514,12 +515,53 @@ var Simulator = Class.extend({
         return res;
     },
 
+    Qj2name: [0, 'Load1', 'Load2', 'Load3', 'Store1', 'Store2', 'Store3', 'Add1', 'Add2', 'Add3', 'Mult1', 'Mult2'],
     updateView: function() {
         // update html elements
         var table = document.getElementById('float-regs');
         var r = 2;
         for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
             table.rows[r].cells[c].innerHTML = simulator.Regs[c];
+        }
+
+        var cycle_num = document.getElementById('cycle-num');
+
+        cycle_num.innerHTML = eval(cycle_num.innerHTML) + 1;
+
+        var float_regs = document.getElementById('float-regs');
+        for (var r = 2, n = float_regs.rows.length; r < n; r++) {
+            for (var c = 1, m = float_regs.rows[r].cells.length; c < m; c++) {
+                float_regs.rows[r].cells[c].innerHTML = simulator.Regs[c - 1];
+            }
+        }
+
+        var load_q = document.getElementById('load-queue');
+        for (var r = 1, n = load_q.rows.length; r < n; r++) {
+            var rs = simulator.RS[simulator.loadStartIndex + r - 1];
+            load_q.rows[r].cells[1].innerHTML = rs.busy;
+            load_q.rows[r].cells[2].innerHTML = rs.A;
+            // load_q.rows[r].cells[3] = ;
+        }
+
+        var store_q = document.getElementById('store-queue');
+        for (var r = 1, n = store_q.rows.length; r < n; r++) {
+            var rs = simulator.RS[simulator.storeStartIndex + r - 1];
+            store_q.rows[r].cells[1].innerHTML = rs.busy;
+            store_q.rows[r].cells[2].innerHTML = rs.A;
+
+        }
+
+        var stations = document.getElementById('reserve-stations');
+        for (var r = 1, n = stations.rows.length; r < n; r++) {
+            var rs = simulator.RS[simulator.addStartIndex + r - 1];
+            // stations.rows[r].cells[0].innerHTML=
+            stations.rows[r].cells[2].innerHTML = rs.busy;
+            stations.rows[r].cells[3].innerHTML = rs.op;
+            stations.rows[r].cells[4].innerHTML = rs.Vj;
+            stations.rows[r].cells[5].innerHTML = rs.Vk;
+
+            stations.rows[r].cells[6].innerHTML = this.Qj2name[rs.Qj];
+            stations.rows[r].cells[7].innerHTML = this.Qj2name[rs.Qk];
         }
     }
 });

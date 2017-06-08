@@ -79,7 +79,7 @@ FPAdder = Class.extend({
                         break;
                 }
                 this.simu.instQueue[this.inst2.index].status = EXE; // executed
-                this.updateInst(this.inst2.index);
+                if (this.inst2.index < 5) this.updateInst(this.inst2.index);
             }
             this.inst2.leftCycle--;
         }
@@ -101,13 +101,12 @@ FPAdder = Class.extend({
             // notify
             this.simu.setCDB(this.inst2.rsNum, this.inst2.res);
             this.simu.instQueue[this.inst2.index].status = WB;
-            this.updateInst(this.inst2.index);
+            if (this.inst2.index < 5) this.updateInst(this.inst2.index);
             this.busy = 'not';
         }
     },
 
     updateInst: function(index) {
-        if (index >= 5) return;
         for (var i = 0; i < this.simu.instQueue[index].status; i++) {
             this.table.rows[index + 1].cells[i + 5].innerHTML = 'O';
         }
@@ -143,7 +142,7 @@ var Multiplier = Class.extend({
                     break;
             }
             this.simu.instQueue[this.inst.index].status = EXE; // executed
-            this.updateInst(this.inst.index);
+            if (this.inst.index < 5) this.updateInst(this.inst.index);
         }
     },
 
@@ -156,13 +155,12 @@ var Multiplier = Class.extend({
         if (this.busy == 'yes' && this.inst && this.inst.leftCycle == 0) {
             this.simu.setCDB(this.inst.rsNum, this.inst.res);
             this.simu.instQueue[this.inst.index].status = WB;
-            this.updateInst(this.inst.index);
+            if (this.inst.index < 5) this.updateInst(this.inst.index);
             this.busy = 'not';
         }
     },
 
     updateInst: function(index) {
-        if (index >= 5) return;
         for (var i = 0; i < this.simu.instQueue[index].status; i++) {
             this.table.rows[index + 1].cells[i + 5].innerHTML = 'O';
         }
@@ -218,7 +216,7 @@ var Memory = Class.extend({
     oneCycle: function() {
         if (this.loadBusy == 'yes') {
             this.simu.instQueue[this.ldRS.index].status = EXE;
-            this.updateInst(this.ldRS.index);
+            if (this.ldRS.index < 5) this.updateInst(this.ldRS.index);
             if (this.ldCycleLeft == 2) {
                 // pass
             } else if (this.ldCycleLeft == 1) {
@@ -230,7 +228,7 @@ var Memory = Class.extend({
 
         if (this.storeBusy == 'yes') {
             this.simu.instQueue[this.stRS.index].status = EXE;
-            this.updateInst(this.stRS.index);
+            if (this.stRS.index < 5) this.updateInst(this.stRS.index);
             if (this.stCycleLeft == 2) {
                 // pass
             } else if (this.stCycleLeft == 1) {
@@ -246,19 +244,18 @@ var Memory = Class.extend({
             this.simu.setCDB(this.ldRS.id, this.ld);
             this.ldRS.busy = 'not';
             this.simu.instQueue[this.ldRS.index].status = WB;
-            this.updateInst(this.ldRS.index);
+            if (this.ldRS.index < 5)  this.updateInst(this.ldRS.index);
         }
         if (this.stCycleLeft == 0) {
             this.storeBusy = 'not';
             this.setMemAt(this.stRS.A, this.stRS.Vk);
             this.simu.instQueue[this.stRS.index].status = WB;
-            this.updateInst(this.stRS.index);
+            if (this.stRS.index < 5) this.updateInst(this.stRS.index);
         }
 
     },
 
     updateInst: function(index) {
-        if (index >= 5) return;
         for (var i = 0; i < this.simu.instQueue[index].status; i++) {
             this.table.rows[index + 1].cells[i + 5].innerHTML = 'O';
         }
@@ -358,7 +355,7 @@ var Simulator = Class.extend({
                     this.Qi[rd] = r;
 
                     this.RS[r].index = inst.index;
-                    this.updateInst(inst.index);
+                    if (inst.index < 5)  this.updateInst(inst.index);
                     return true;
                 }
             } else if (inst.op == 'MULD' || inst.op == 'DIVD') {
@@ -394,7 +391,7 @@ var Simulator = Class.extend({
                     this.Qi[rd] = r;
 
                     this.RS[r].index = inst.index;
-                    this.updateInst(inst.index);
+                    if (inst.index < 5) this.updateInst(inst.index);
                     return true;
                 }
             } else if (inst.op == 'LD') {
@@ -421,7 +418,7 @@ var Simulator = Class.extend({
                     this.Qi[rd] = r;
 
                     this.RS[r].index = inst.index;
-                    this.updateInst(inst.index);
+                    if (inst.index < 5) this.updateInst(inst.index);
                     return true;
                 }
             } else if (inst.op == 'ST') {
@@ -449,7 +446,7 @@ var Simulator = Class.extend({
                     this.RS[r].A = imm;
 
                     this.RS[r].index = inst.index;
-                    this.updateInst(inst.index);
+                    if (inst.index < 5) this.updateInst(inst.index);
                     return true;
                 }
             }
@@ -458,7 +455,6 @@ var Simulator = Class.extend({
     },
 
     updateInst: function(index) {
-        if (index >= 5) return;
         for (var i = 0; i < this.instQueue[index].status; i++) {
             this.table.rows[index + 1].cells[i + 5].innerHTML = 'O';
         }

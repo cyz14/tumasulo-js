@@ -62,6 +62,7 @@ FPAdder = Class.extend({
         this.inst2 = null;
         this.simu = simu;
         this.busy = 'not';
+        this.table = document.getElementById("inst-table");
     },
 
     oneCycle: function() {
@@ -78,6 +79,7 @@ FPAdder = Class.extend({
                         break;
                 }
                 this.simu.instQueue[this.inst2.index].status = EXE; // executed
+                this.updateInst(this.inst2.index);
             }
             this.inst2.leftCycle--;
         }
@@ -98,7 +100,15 @@ FPAdder = Class.extend({
         if (this.busy == 'exe' && this.inst2 && this.inst2.leftCycle == 0) {
             // notify
             this.simu.setCDB(this.inst2.rsNum, this.inst2.res);
+            this.simu.instQueue[this.inst2.index].status = WB;
+            this.updateInst(this.inst2.index);
             this.busy = 'not';
+        }
+    },
+
+    updateInst: function(index) {
+        for (var i = 0; i < this.simu.instQueue[index].status; i++) {
+            this.table.rows[index + 1].cells[i + 5].innerHTML = 'O';
         }
     }
 });
@@ -110,6 +120,7 @@ var Multiplier = Class.extend({
         this.inst = null;
         this.regs = new Array(6);
         this.busy = 'not';
+        this.table = document.getElementById("inst-table");
     },
 
     oneCycle: function() {
@@ -131,6 +142,7 @@ var Multiplier = Class.extend({
                     break;
             }
             this.simu.instQueue[this.inst.index].status = EXE; // executed
+            this.updateInst(this.inst.index);
         }
     },
 
@@ -143,7 +155,14 @@ var Multiplier = Class.extend({
         if (this.busy == 'yes' && this.inst && this.inst.leftCycle == 0) {
             this.simu.setCDB(this.inst.rsNum, this.inst.res);
             this.simu.instQueue[this.inst.index].status = WB;
+            this.updateInst(this.inst.index);
             this.busy = 'not';
+        }
+    },
+
+    updateInst: function(index) {
+        for (var i = 0; i < this.simu.instQueue[index].status; i++) {
+            this.table.rows[index + 1].cells[i + 5].innerHTML = 'O';
         }
     }
 });
@@ -171,6 +190,7 @@ var Memory = Class.extend({
         }
         this.loadBusy = 'not';
         this.storeBusy = 'not';
+        this.table = document.getElementById("inst-table");
     },
 
     getMemAt: function(addr) {
@@ -195,6 +215,8 @@ var Memory = Class.extend({
 
     oneCycle: function() {
         if (this.loadBusy == 'yes') {
+            this.simu.instQueue[this.ldRS.index].status = EXE;
+            this.updateInst(this.ldRS.index);
             if (this.ldCycleLeft == 2) {
                 // pass
             } else if (this.ldCycleLeft == 1) {
@@ -205,6 +227,8 @@ var Memory = Class.extend({
         }
 
         if (this.storeBusy == 'yes') {
+            this.simu.instQueue[this.stRS.index].status = EXE;
+            this.updateInst(this.stRS.index);
             if (this.stCycleLeft == 2) {
                 // pass
             } else if (this.stCycleLeft == 1) {
@@ -219,12 +243,22 @@ var Memory = Class.extend({
         if (this.ldCycleLeft == 0) {
             this.simu.setCDB(this.ldRS.id, this.ld);
             this.ldRS.busy = 'not';
+            this.simu.instQueue[this.ldRS.index].status = WB;
+            this.updateInst(this.ldRS.index);
         }
         if (this.stCycleLeft == 0) {
             this.storeBusy = 'not';
             this.setMemAt(this.stRS.A, this.stRS.Vk);
+            this.simu.instQueue[this.stRS.index].status = WB;
+            this.updateInst(this.stRS.index);
         }
 
+    },
+
+    updateInst: function(index) {
+        for (var i = 0; i < this.simu.instQueue[index].status; i++) {
+            this.table.rows[index + 1].cells[i + 5].innerHTML = 'O';
+        }
     }
 });
 
@@ -271,7 +305,8 @@ var Simulator = Class.extend({
         for (var i = 0; i < this.multEndIndex; ++i)
             this.RS[i] = new ReservationStation(i);
 
-        this.cdb = ''; // common data bus
+        this.table = document.getElementById("inst-table");
+        this.last_addr = 5;
     },
 
     oneCycle: function() {
@@ -284,7 +319,7 @@ var Simulator = Class.extend({
     issue: function() {
         if (this.nInsts < this.instQueue.length) {
             var inst = this.instQueue[this.nInsts];
-            this.instQueue[this.nInsts].status = 1; // issued
+            this.instQueue[this.nInsts].status = ISSUE; // issued
             ++this.nInsts;
 
             if (inst.op == 'ADDD' || inst.op == 'SUBD') {
@@ -320,6 +355,7 @@ var Simulator = Class.extend({
                     this.Qi[rd] = r;
 
                     this.RS[r].index = inst.index;
+                    this.updateInst(inst.index);
                     return true;
                 }
             } else if (inst.op == 'MULD' || inst.op == 'DIVD') {
@@ -355,6 +391,7 @@ var Simulator = Class.extend({
                     this.Qi[rd] = r;
 
                     this.RS[r].index = inst.index;
+                    this.updateInst(inst.index);
                     return true;
                 }
             } else if (inst.op == 'LD') {
@@ -381,6 +418,7 @@ var Simulator = Class.extend({
                     this.Qi[rd] = r;
 
                     this.RS[r].index = inst.index;
+                    this.updateInst(inst.index);
                     return true;
                 }
             } else if (inst.op == 'ST') {
@@ -408,10 +446,17 @@ var Simulator = Class.extend({
                     this.RS[r].A = imm;
 
                     this.RS[r].index = inst.index;
+                    this.updateInst(inst.index);
                     return true;
                 }
             }
             return false;
+        }
+    },
+
+    updateInst: function(index) {
+        for (var i = 0; i < this.instQueue[index].status; i++) {
+            this.table.rows[index + 1].cells[i + 5].innerHTML = 'O';
         }
     },
 

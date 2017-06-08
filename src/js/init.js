@@ -578,10 +578,9 @@ var Simulator = Class.extend({
         var table = document.getElementById("mem-table");
         var r = 0;
         for (var i = 1; i <= 10; i++) {
-            table.rows[r].cells[i].innerHTML = start + i - 1;
-            table.rows[r + 1].cells[i].innerHTML = data[i - 1];
+            update_cell(table.rows[r].cells[i], start + i - 1);
+            update_cell(table.rows[r + 1].cells[i], data[i - 1]);
         }
-        this.last_addr = addr;
     },
 
     Qj2name: [0, 'Load1', 'Load2', 'Load3', 'Store1', 'Store2', 'Store3', 'Add1', 'Add2', 'Add3', 'Mult1', 'Mult2'],
@@ -593,23 +592,23 @@ var Simulator = Class.extend({
         var float_regs = document.getElementById('float-regs');
         for (var r = 1, n = float_regs.rows.length; r < n; r++) {
             for (var c = 1, m = float_regs.rows[r].cells.length; c < m; c++) {
-                float_regs.rows[r].cells[c].innerHTML = simulator.Regs[c - 1];
+                update_cell(float_regs.rows[r].cells[c], simulator.Regs[c - 1]);
             }
         }
 
         var load_q = document.getElementById('load-queue');
         for (var r = 1, n = load_q.rows.length; r < n; r++) {
             var rs = simulator.RS[simulator.loadStartIndex + r - 1];
-            load_q.rows[r].cells[1].innerHTML = rs.busy;
-            load_q.rows[r].cells[2].innerHTML = rs.A;
+            update_cell(load_q.rows[r].cells[1], rs.busy);
+            update_cell(load_q.rows[r].cells[2], rs.A);
             // load_q.rows[r].cells[3] = ;
         }
 
         var store_q = document.getElementById('store-queue');
         for (var r = 1, n = store_q.rows.length; r < n; r++) {
             var rs = simulator.RS[simulator.storeStartIndex + r - 1];
-            store_q.rows[r].cells[1].innerHTML = rs.busy;
-            store_q.rows[r].cells[2].innerHTML = rs.A;
+            update_cell(store_q.rows[r].cells[1], rs.busy);
+            update_cell(store_q.rows[r].cells[2], rs.A);
 
         }
 
@@ -617,16 +616,14 @@ var Simulator = Class.extend({
         for (var r = 1, n = stations.rows.length; r < n; r++) {
             var rs = simulator.RS[simulator.addStartIndex + r - 1];
             // stations.rows[r].cells[0].innerHTML=
-            stations.rows[r].cells[2].innerHTML = rs.busy;
-            stations.rows[r].cells[3].innerHTML = rs.op;
-            stations.rows[r].cells[4].innerHTML = rs.Vj;
-            stations.rows[r].cells[5].innerHTML = rs.Vk;
+            update_cell(stations.rows[r].cells[2], rs.busy);
+            update_cell(stations.rows[r].cells[3], rs.op);
+            update_cell(stations.rows[r].cells[4], rs.Vj);
+            update_cell(stations.rows[r].cells[5], rs.Vk);
 
-            stations.rows[r].cells[6].innerHTML = this.Qj2name[rs.Qj];
-            stations.rows[r].cells[7].innerHTML = this.Qj2name[rs.Qk];
+            update_cell(stations.rows[r].cells[6], this.Qj2name[rs.Qj]);
+            update_cell(stations.rows[r].cells[7], this.Qj2name[rs.Qk]);
         }
-
-        this.view_mem(this.last_addr);
     }
 });
 
@@ -636,4 +633,19 @@ function view_mem() {
     var addr = document.getElementById("mem-addr").value;
     console.log(addr)
     simulator.view_mem(parseInt(addr));
+}
+
+if(typeof(String.prototype.trim) === "undefined")
+{
+    String.prototype.trim = function() 
+    {
+        return String(this).replace(/^\s+|\s+$/g, '');
+    };
+}
+
+function update_cell(cell, data) {
+    if (cell.innerHTML.trim() !== String(data).trim()) {
+        cell.innerHTML = String(data).trim();
+        $(cell).fadeTo(0, 0, function() { $(this).fadeTo(200, 1); });
+    }
 }

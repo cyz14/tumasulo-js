@@ -7,6 +7,11 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        hr {
+            margin: 5px 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,25 +20,22 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span12">
-                <form class="form-inline">
-                    <label>Select File</label>
-                    <input class="btn" type="file" id="inst_input" onchange="loadInstsFromFile(event)" />
-                    <!-- <button type="submit" class="btn">Submit</button> -->
-                </form>
 
-                <h3>
+                <h4>
+                    <input type="file" id="inst_input" onchange="loadInstsFromFile(event)"/>
                     <button class="btn" id="next_cycle" onclick="next_cycle()">Next Cycle</button>
-                    <img alt="" style="width:50px;height:auto;" src="https://image.freepik.com/free-icon/timer_318-61019.jpg" />
+                    <img alt="" style="width:40px;height:auto;" src="https://image.freepik.com/free-icon/timer_318-61019.jpg" />
                     <span id="cycle-num">0</span>
-                </h3>
+                </h4>
             </div>
         </div>
+        <hr>
         <div class="row-fluid">
             <div class="span4">
-                <h3>
+                <h4>
                     Load Queue
-                </h3>
-                <table class="table table-condensed table-bordered" id="load-queue">
+                </h4>
+                <table class="table table-striped table-hover table-condensed table-bordered" id="load-queue">
                     <thead>
                         <tr>
                             <th>
@@ -62,7 +64,7 @@
                             <td>
                             </td>
                         </tr>
-                        <tr class="success">
+                        <tr>
                             <td>
                                 Load2
                             </td>
@@ -74,7 +76,7 @@
                             <td>
                             </td>
                         </tr>
-                        <tr class="error">
+                        <tr>
                             <td>
                                 Load3
                             </td>
@@ -88,10 +90,11 @@
                         </tr>
                     </tbody>
                 </table>
-                <h3>
+                <hr>
+                <h4>
                     Store Queue
-                </h3>
-                <table class="table table-condensed table-bordered" id="store-queue">
+                </h4>
+                <table class="table table-striped table-hover table-condensed table-bordered" id="store-queue">
                     <thead>
                         <tr>
                             <th>
@@ -120,7 +123,7 @@
                             <td>
                             </td>
                         </tr>
-                        <tr class="success">
+                        <tr>
                             <td>
                                 Store2
                             </td>
@@ -132,7 +135,7 @@
                             <td>
                             </td>
                         </tr>
-                        <tr class="error">
+                        <tr>
                             <td>
                                 Store3
                             </td>
@@ -148,10 +151,10 @@
                 </table>
             </div>
             <div class="span8">
-                <h3>
+                <h4>
                     Reservation Stations
-                </h3>
-                <table class="table table-bordered table-condensed" id="reserve-stations">
+                </h4>
+                <table class="table table-striped table-hover table-bordered table-condensed" id="reserve-stations">
                     <thead>
                         <tr>
                             <th>
@@ -200,7 +203,7 @@
                             <td>
                             </td>
                         </tr>
-                        <tr class="success">
+                        <tr>
                             <td>
                             </td>
                             <td>
@@ -219,7 +222,7 @@
                             <td>
                             </td>
                         </tr>
-                        <tr class="error">
+                        <tr>
                             <td>
                             </td>
                             <td>
@@ -238,7 +241,7 @@
                             <td>
                             </td>
                         </tr>
-                        <tr class="warning">
+                        <tr>
                             <td>
                             </td>
                             <td>
@@ -257,7 +260,7 @@
                             <td>
                             </td>
                         </tr>
-                        <tr class="info">
+                        <tr>
                             <td>
                             </td>
                             <td>
@@ -278,10 +281,11 @@
                         </tr>
                     </tbody>
                 </table>
-                <h3 class="text-left">
+                <hr>
+                <h4 class="text-left">
                     浮点寄存器FU
-                </h3>
-                <table class="table table-bordered table-condensed" id="float-regs">
+                </h4>
+                <table class="table table-striped table-hover table-bordered table-condensed" id="float-regs">
                     <thead>
                         <tr>
                             <th>
@@ -323,7 +327,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="success">
+                        <tr>
                             <td>
                                 <strong>数据</strong>
                             </td>
@@ -354,21 +358,22 @@
                 </table>
             </div>
         </div>
+        <hr>
         <div class="row-fluid">
             <div class="span6">
-                <h3 class="text-left">
+                <h4 class="text-left">
 
 
-                    <form class="form-search">
+                    <div class="form-search">
                         <span>指令队列</span>
                         <button class="btn">Last 5</button>
                         <input type="text" class="input-medium search-query">
                         <button type="submit" class="btn">Goto</button>
                         <button class="btn">Next 5</button>
-                    </form>
+                    </div>
 
-                </h3>
-                <table class="table table-hover table-bordered table-condensed" id="inst-table">
+                </h4>
+                <table class="table table-striped table-hover table-bordered table-condensed" id="inst-table">
                     <thead>
                         <tr>
                             <th>Index</th>
@@ -406,7 +411,7 @@
                             <td></td>
                             <td></td>
                         </tr>
-                        <tr class="success">
+                        <tr>
                             <td>2</td>
                             <td></td>
                             <td></td>
@@ -416,7 +421,7 @@
                             <td></td>
                             <td></td>
                         </tr>
-                        <tr class="error">
+                        <tr>
                             <td>3</td>
                             <td></td>
                             <td></td>
@@ -426,7 +431,7 @@
                             <td></td>
                             <td></td>
                         </tr>
-                        <tr class="warning">
+                        <tr>
                             <td>4</td>
                             <td></td>
                             <td></td>
@@ -436,7 +441,7 @@
                             <td></td>
                             <td></td>
                         </tr>
-                        <tr class="info">
+                        <tr>
                             <td>5</td>
                             <td></td>
                             <td></td>
@@ -450,14 +455,14 @@
                 </table>
             </div>
             <div class="span6">
-                <h3>
-                    <form class="form-inline">
+                <h4>
+                    <div class="form-inline">
                         <span>内存MEM</span>
                         <input type="text" class="input-medium search-query" id="mem-addr">
                         <button type="button" class="btn" onclick="view_mem()">Goto</button>
-                    </form>
-                </h3>
-                <table class="table table-condensed table-bordered" id="mem-table">
+                    </div>
+                </h4>
+                <table class="table table-striped table-hover table-condensed table-bordered" id="mem-table">
                     <thead>
                         <tr>
                             <th>

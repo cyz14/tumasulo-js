@@ -529,18 +529,11 @@ var Simulator = Class.extend({
     Qj2name: [0, 'Load1', 'Load2', 'Load3', 'Store1', 'Store2', 'Store3', 'Add1', 'Add2', 'Add3', 'Mult1', 'Mult2'],
     updateView: function() {
         // update html elements
-        var table = document.getElementById('float-regs');
-        var r = 2;
-        for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
-            table.rows[r].cells[c].innerHTML = simulator.Regs[c];
-        }
-
         var cycle_num = document.getElementById('cycle-num');
-
         cycle_num.innerHTML = eval(cycle_num.innerHTML) + 1;
 
         var float_regs = document.getElementById('float-regs');
-        for (var r = 2, n = float_regs.rows.length; r < n; r++) {
+        for (var r = 1, n = float_regs.rows.length; r < n; r++) {
             for (var c = 1, m = float_regs.rows[r].cells.length; c < m; c++) {
                 float_regs.rows[r].cells[c].innerHTML = simulator.Regs[c - 1];
             }

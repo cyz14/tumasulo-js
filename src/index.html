@@ -396,11 +396,11 @@
                 <h3>
                     <form class="form-inline">
                         <span>内存MEM</span>
-                        <input type="text" class="input-medium search-query">
-                        <button type="submit" class="btn">Goto</button>
+                        <input type="text" class="input-medium search-query" id="mem-addr">
+                        <button type="submit" class="btn" onclick="view_mem()">Goto</button>
                     </form>
                 </h3>
-                <table class="table table-condensed table-bordered">
+                <table class="table table-condensed table-bordered" id="mem-table">
                     <thead>
                         <tr>
                             <th>

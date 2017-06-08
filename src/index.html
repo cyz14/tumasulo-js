@@ -17,9 +17,14 @@
             <form class="form-inline">
                 <label>Select File</label>
                 <input class="btn" type="file" id="inst_input" onchange="loadInstsFromFile(event)"/>
-                <button type="submit" class="btn">Submit</button>
+                <!-- <button type="submit" class="btn">Submit</button> -->
             </form>
-            <button class="btn" id="next_cycle" onclick="next_cycle()">Next Cycle</button>
+            
+            <h3>
+                <button class="btn" id="next_cycle" onclick="next_cycle()">Next Cycle</button>
+                <img alt="" style="width:50px;height:auto;"src="https://image.freepik.com/free-icon/timer_318-61019.jpg" />
+                <span id="cycle-num">0</span>
+            </h3>
         </div>
     </div>
     <div class="row-fluid">
@@ -395,9 +400,6 @@
                 </li>
             </ul>
             <h3>
-                <img alt="" style="width:100px;height:auto;"src="https://image.freepik.com/free-icon/timer_318-61019.jpg" />0
-            </h3>
-            <h3>
                 <form class="form-inline">
                     <span>内存MEM</span>
                     <input type="text" class="input-medium search-query">
@@ -562,6 +564,9 @@
 
 <script>
     function loadInstsFromFile(event) {
+        // reset
+        cycle_num.innerHTML = '0';
+        
         var file = event.target.files[0];
         var reader = new FileReader();
         reader.onload = function(event) {
@@ -587,6 +592,9 @@
 
     function next_cycle() { 
         simulator.oneCycle();
+        var cycle_num = document.getElementById('cycle-num');
+
+        cycle_num.innerHTML = eval(cycle_num.innerHTML) + 1;
 
         var float_regs = document.getElementById('float-regs');
         for (var r = 2, n = float_regs.rows.length; r < n; r++) {

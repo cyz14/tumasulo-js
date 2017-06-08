@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>Tumasulo Simulator</title>
+</head>
+
+<body>
+    <div>
+        <p>Hello Tumasulo!</p>
+    </div>
+
+    <div>
+        <input type="file" id="inst_input" onchange="loadInstsFromFile(event)" />
+    </div>
+
+    <div>
+        <button id="next_cycle" onclick="next_cycle()">
+    </div>
+</body>
+
+<script src="js/patched_class.js"></script>
+<script src="js/init.js"></script>
+
+<script>
+    function loadInstsFromFile(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            // The file's text will be printed here
+            var lines = event.target.result.split('\n');
+            console.log(lines);
+            // simulator.nInsts = lines.length;
+            for (var i = 0; i < lines.length; ++i) {
+                var parts = lines[i].split(' ');
+                console.log(parts);
+                if (parts.length == 1) {
+                    console.log('End');
+                    continue;
+                }
+                var inst = new Instruction(parts[0], parts[1], parts[2], parts[3]);
+                simulator.instQueue.push(inst);
+                console.log(simulator.instQueue[i].toString());
+            }
+            // simulator.nInsts = 0;
+        };
+        reader.readAsText(file);
+    }
+
+    function next_cycle() { 
+        simulator.oneCycle();
+    }
+</script>
+
+</html>
